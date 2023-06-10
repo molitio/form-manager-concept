@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppLanding, NavigationHeader } from "./components";
+import { StyledGlobal } from "./styled";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -20,6 +21,7 @@ root.render(
       {/* App Context */}
       <NavigationHeader />
       <RouterProvider router={router} />
+      <StyledGlobal />
     </div>
   </React.StrictMode>
 );

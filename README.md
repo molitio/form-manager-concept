@@ -1,6 +1,8 @@
 # Kérdőívek
 
 Kisérleti megoldása egy magas nehézségű komplex űrlap kezelő web alkalmazásnak. [Forrás](https://github.com/horvathgyozo/react-bead-surveys-starter-kit)
+Használt assisztív technológia [ChapGpt 3.5](https://chat.openai.com)
+[Solution Thread](https://chat.openai.com/share/88964d9e-c084-474d-931c-1ccd615dfd14) 
 
 ## A feladat
 
