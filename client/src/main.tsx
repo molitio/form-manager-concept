@@ -1,10 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import "./index.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AppLanding, NavigationHeader } from "./components";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLanding />,
+  },
+]);
+
+root.render(
   <React.StrictMode>
-    <App />
+    <div>
+      {/* App Context */}
+      <NavigationHeader />
+      <RouterProvider router={router} />
+    </div>
   </React.StrictMode>
 );
