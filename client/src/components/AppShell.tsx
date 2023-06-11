@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyledAppShell, StyledGlobal } from "../styled";
 import {
   RouteObject,
@@ -6,52 +6,32 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import AppLanding from "./AppLanding";
-import { useSelector, useDispatch } from "react-redux";
 import NavigationHeader from "./NavigationHeader";
-import { AppContextState, setLoggedIn } from "../context";
+import Login from "./Login";
+import { routeMap } from "../context";
+import Register from "./Register";
 
-const AppShell: React.FC<React.PropsWithChildren> = (props) => {
-  const { children } = props;
-
-  const loggedIn = useSelector(
-    (state: AppContextState) => state?.auth?.loggedIn
-  );
-
-  const [loggedInState, setLoggedInState] = useState(false);
-
-  React.useEffect(() => {
-    dispatch(setLoggedIn(loggedInState));
-  }, [loggedInState]);
-
-  const dispatch = useDispatch();
-
+const AppShell: React.FC = () => {
   const routes: RouteObject[] = [
     {
-      path: "/",
+      path: routeMap["root"].href,
       element: <AppLanding />,
     },
     {
-      path: "/auth",
-      element: loggedInState ? <>logged in</> : <>not logged in</>,
+      path: routeMap["login"].href,
+      element: <Login />,
+    },
+    {
+      path: routeMap["register"].href,
+      element: <Register />,
     },
   ];
 
   const router = createBrowserRouter([...routes]);
 
-  const handleMockLogin = () => {
-    setLoggedInState(true);
-    console.log("logged in state", loggedInState);
-  };
-  const handleMockLogout = () => {
-    setLoggedInState(false);
-    console.log("logged in state", loggedInState);
-  };
-
   return (
     <StyledAppShell>
       <NavigationHeader />
-      <button onClick={handleMockLogin}>login mock</button>
-      <button onClick={handleMockLogout}>logout mock</button>
       <RouterProvider router={router} />
       <StyledGlobal />
     </StyledAppShell>
