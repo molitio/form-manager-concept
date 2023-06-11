@@ -1,12 +1,11 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 export const StyledGlobal = createGlobalStyle`
 :root{
-  --text-primary: #192021;
-  --text-secondary: #779fa8;
-  --bg-primary: #8EBCC7;
-  --bg-secondary: #00302c;
-
+  --text-primary: #8EBCC7;
+  --text-secondary: #00302c;
+  --bg-primary: #192021;
+  --bg-secondary: #779fa8;
 }
 
 body {
@@ -17,4 +16,13 @@ body {
   margin: 0;
   padding: 0;
 }
+`;
+
+export const StyledPage = styled.main`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
 `;
