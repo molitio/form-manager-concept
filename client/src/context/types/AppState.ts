@@ -18,6 +18,7 @@ const appSlice = createSlice({
   reducers: {
     setLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.auth.loggedIn = action.payload;
+      console.log("action payload", action.payload);
     },
   },
 });

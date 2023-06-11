@@ -1,35 +1,36 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { useSelector, useDispatch } from "react-redux";
+import { AppLanding, AppShell } from "./components";
+import { AppContextStoreProvider } from "./context";
 import {
-  createBrowserRouter,
   RouteObject,
   RouterProvider,
+  createBrowserRouter,
 } from "react-router-dom";
-import { AppLanding, Layout } from "./components";
-import { AppContextState } from "./context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const routes: RouteObject[] = [
+const rootRoutes: RouteObject[] = [
   {
     path: "/",
-    element: <AppLanding />,
-  },
-  {
-    path: "/auth",
-    element: <>logged in</>,
+    element: <AppShell />,
+    children: [
+      {
+        path: "/",
+        element: <AppLanding />,
+      },
+    ],
   },
 ];
 
-const router = createBrowserRouter([...routes]);
+const rootRouter = createBrowserRouter(rootRoutes);
 
 root.render(
   <React.StrictMode>
-    <Layout>
-      <RouterProvider router={router} />
-    </Layout>
+    <AppContextStoreProvider>
+      <AppShell />
+    </AppContextStoreProvider>
   </React.StrictMode>
 );
