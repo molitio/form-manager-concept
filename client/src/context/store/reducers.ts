@@ -20,6 +20,10 @@ const appSlice = createSlice({
       state.auth.loggedIn = action.payload;
       console.log("action payload", action.payload);
     },
+    setUserId: (state, action: PayloadAction<number>) => {
+      state.auth.userId = action.payload;
+      console.log("action payload", action.payload);
+    },
   },
 });
 

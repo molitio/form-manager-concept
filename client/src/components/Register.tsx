@@ -7,10 +7,13 @@ import {
   StyledRegisterFormLabel,
 } from "../styled";
 import { RegisterUser } from "../services";
+import { User } from "../types";
 
 const Register: React.FC = () => {
-  const [user, setUser] = React.useState({
-    name: "",
+  const formRef = React.useRef(null);
+
+  const [user, setUser] = React.useState<User>({
+    fullname: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -25,28 +28,39 @@ const Register: React.FC = () => {
     }
 
     try {
-      const registrationResult = RegisterUser(
-        user.name,
-        user.email,
-        user.password
-      );
-      console.log("registration result", registrationResult);
-    } catch (error) {}
+      const Register = async () => {
+        const registrationResult = await RegisterUser(user);
+
+        console.log("registration result", registrationResult);
+        if (registrationResult) {
+          setUser({
+            fullname: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+          });
+        }
+      };
+
+      Register();
+    } catch (error) {
+      console.error("Error: ", error);
+    }
   };
 
   return (
     <StyledRegister>
-      <StyledRegisterForm onSubmit={handleRegister}>
+      <StyledRegisterForm onSubmit={handleRegister} ref={formRef}>
         <StyledRegisterFormLabel htmlFor="name">Név:</StyledRegisterFormLabel>
         <StyledRegisterFormInput
           type="text"
           id="name"
           name="name"
-          value={user.name}
+          value={user.fullname}
           onChange={(e) =>
             setUser({
               ...user,
-              name: e.target.value,
+              fullname: e.target.value,
             })
           }
           required
