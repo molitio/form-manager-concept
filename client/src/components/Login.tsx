@@ -21,16 +21,18 @@ const Login: React.FC = () => {
     (state: RootState) => state.auth?.user?.loggedIn
   );
 
-  if (loggedIn) {
-    navigate(`${AppConfig.apiRootUrl}${AppConfig.surveysPath}`);
-  }
-
   const [authenticatedUser, setAuthenticatedUser] = React.useState<UserLogin>({
     email: "",
     password: "",
   });
 
   const [loginError, setLoginError] = React.useState("");
+
+  React.useEffect(() => {
+    if (loggedIn) {
+      navigate(`${AppConfig.home}`);
+    }
+  }, [loggedIn]);
 
   const handleLogin = (event: React.FormEvent) => {
     event.preventDefault();
@@ -48,12 +50,13 @@ const Login: React.FC = () => {
             })
           );
           setLoginError("");
-          navigate(`${AppConfig.apiRootUrl}${AppConfig.surveysPath}`);
         }
       };
 
       Login();
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error", error);
+    }
   };
 
   return (

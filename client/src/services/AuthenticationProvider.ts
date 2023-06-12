@@ -43,7 +43,7 @@ export const LoginUser: (user: UserLogin) => Promise<LoginResult> = async (
 ) => {
   try {
     const fetchResult = await fetch(
-      `${AppConfig.apiRootUrl}${AppConfig.loginPath}`,
+      `${AppConfig.apiRootUrl}${AppConfig.apiLoginPath}`,
       {
         method: "POST",
         headers: {

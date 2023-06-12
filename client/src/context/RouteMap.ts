@@ -1,43 +1,44 @@
 import { Route, RouteMap } from "../types";
+import { AppConfig } from "./AppConfig";
 
 export const routeMap: RouteMap = {
   root: {
     displayText: "Home",
-    href: "/",
+    href: AppConfig.home,
     requireAuth: false,
     hidden: true,
   },
   login: {
     displayText: "Bejelentkezés",
-    href: "/auth",
+    href: AppConfig.loginPath,
     requireAuth: false,
   },
   register: {
     displayText: "Regisztráció",
-    href: "/register",
+    href: AppConfig.registerPath,
     requireAuth: false,
   },
   surveys: {
     displayText: "Kérdőíveim",
-    href: "/surveys",
+    href: AppConfig.surveysPath,
     requireAuth: true,
   },
 
   responses: {
     displayText: "Válaszok",
-    href: "/responses",
+    href: AppConfig.responsesPath,
     requireAuth: true,
   },
 
   profiles: {
     displayText: "Profil",
-    href: "/profile",
+    href: AppConfig.profilePath,
     requireAuth: true,
   },
 
   logOut: {
     displayText: "Kijelentkezés",
-    href: "/",
+    href: AppConfig.logoutPath,
     requireAuth: true,
   },
 };

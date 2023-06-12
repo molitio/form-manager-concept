@@ -1,7 +1,13 @@
+import { routeMap } from "./RouteMap";
+
 export const AppConfig = {
-  apiRootUrl: "http://localhost:3030/",
-  registerPath: "/users",
-  loginPath: "/authentication",
-  resultsPath: "/results",
+  apiRootUrl: "http://localhost:3030",
+  home: "/",
+  apiLoginPath: "/authentication",
+  loginPath: "/login",
+  registerPath: "/register",
   surveysPath: "/surveys",
+  responsesPath: "/responses",
+  profilePath: "/profile",
+  logoutPath: "/",
 };
