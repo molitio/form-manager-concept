@@ -1,18 +1,16 @@
 import React from "react";
 import {
+  StyledForm,
+  StyledFormButton,
+  StyledFormInput,
+  StyledFormLabel,
   StyledRegister,
-  StyledRegisterForm,
-  StyledRegisterFormButton,
-  StyledRegisterFormInput,
-  StyledRegisterFormLabel,
 } from "../styled";
 import { RegisterUser } from "../services";
-import { User } from "../types";
+import { UserRegister } from "../types";
 
 const Register: React.FC = () => {
-  const formRef = React.useRef(null);
-
-  const [user, setUser] = React.useState<User>({
+  const [user, setUser] = React.useState<UserRegister>({
     fullname: "",
     email: "",
     password: "",
@@ -30,9 +28,7 @@ const Register: React.FC = () => {
     try {
       const Register = async () => {
         const registrationResult = await RegisterUser(user);
-
-        console.log("registration result", registrationResult);
-        if (registrationResult) {
+        if (registrationResult === "Resolved") {
           setUser({
             fullname: "",
             email: "",
@@ -50,9 +46,9 @@ const Register: React.FC = () => {
 
   return (
     <StyledRegister>
-      <StyledRegisterForm onSubmit={handleRegister} ref={formRef}>
-        <StyledRegisterFormLabel htmlFor="name">Név:</StyledRegisterFormLabel>
-        <StyledRegisterFormInput
+      <StyledForm onSubmit={handleRegister}>
+        <StyledFormLabel htmlFor="name">Név:</StyledFormLabel>
+        <StyledFormInput
           type="text"
           id="name"
           name="name"
@@ -65,10 +61,8 @@ const Register: React.FC = () => {
           }
           required
         />
-        <StyledRegisterFormLabel htmlFor="email">
-          Email:
-        </StyledRegisterFormLabel>
-        <StyledRegisterFormInput
+        <StyledFormLabel htmlFor="email">Email:</StyledFormLabel>
+        <StyledFormInput
           type="email"
           id="email"
           name="email"
@@ -81,10 +75,8 @@ const Register: React.FC = () => {
           }
           required
         />
-        <StyledRegisterFormLabel htmlFor="password">
-          Jelszó:
-        </StyledRegisterFormLabel>
-        <StyledRegisterFormInput
+        <StyledFormLabel htmlFor="password">Jelszó:</StyledFormLabel>
+        <StyledFormInput
           type="password"
           id="password"
           name="password"
@@ -97,10 +89,10 @@ const Register: React.FC = () => {
           }
           required
         />
-        <StyledRegisterFormLabel htmlFor="confirm-password">
+        <StyledFormLabel htmlFor="confirm-password">
           Jelszó megerősítése:
-        </StyledRegisterFormLabel>
-        <StyledRegisterFormInput
+        </StyledFormLabel>
+        <StyledFormInput
           type="password"
           id="confirm-password"
           name="confirm-password"
@@ -113,10 +105,8 @@ const Register: React.FC = () => {
           }
           required
         />
-        <StyledRegisterFormButton type="submit">
-          Regisztráció
-        </StyledRegisterFormButton>
-      </StyledRegisterForm>
+        <StyledFormButton type="submit">Regisztráció</StyledFormButton>
+      </StyledForm>
     </StyledRegister>
   );
 };

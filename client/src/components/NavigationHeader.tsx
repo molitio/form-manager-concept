@@ -11,13 +11,17 @@ import { RootState, displayRoute, routeMap } from "../context";
 
 const NavigationHeader: React.FC = () => {
   const loggedIn = useSelector(
-    (state: RootState) => state?.app?.auth?.loggedIn
+    (state: RootState) => state?.auth?.user?.loggedIn
+  );
+
+  const username = useSelector(
+    (state: RootState) => state.auth?.user?.authenticatedUser?.fullname
   );
 
   return (
     <StyledNavigationHeader>
       <StyledNavigationBrandText href="/">
-        📓 Kérdőívek
+        📓 Kérdőívek {username ? `üdvözlet ${username}` : ""}
       </StyledNavigationBrandText>
       <StyledNavigationRouteCollection>
         {Object.entries(routeMap).map((route, i) =>

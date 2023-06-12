@@ -4,36 +4,37 @@ import {
   configureStore,
   createSlice,
 } from "@reduxjs/toolkit";
-import { AppContextState } from "../../types";
+import { AppContextState, AuthenticatedUser } from "../../types";
 
 const initialState: AppContextState = {
-  auth: {
+  user: {
     loggedIn: false,
   },
 };
 
-const appSlice = createSlice({
-  name: "app",
+const authSlice = createSlice({
+  name: "auth",
   initialState,
   reducers: {
     setLoggedIn: (state, action: PayloadAction<boolean>) => {
-      state.auth.loggedIn = action.payload;
+      state.user.loggedIn = action.payload;
       console.log("action payload", action.payload);
     },
-    setUserId: (state, action: PayloadAction<number>) => {
-      state.auth.userId = action.payload;
+    setUser: (state, action: PayloadAction<AuthenticatedUser>) => {
+      state.user.authenticatedUser = action.payload;
       console.log("action payload", action.payload);
     },
   },
 });
 
-const appReducer = appSlice.reducer;
+const authReducer = authSlice.reducer;
 
 const rootReducer = combineReducers({
-  app: appReducer,
+  auth: authReducer,
 });
 
-export const { setLoggedIn } = appSlice.actions;
+export const { setLoggedIn } = authSlice.actions;
+export const { setUser } = authSlice.actions;
 
 export const appStore = configureStore({
   reducer: rootReducer,

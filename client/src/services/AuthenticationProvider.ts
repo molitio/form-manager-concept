@@ -1,26 +1,75 @@
 import { AppConfig } from "../context";
-import { User } from "../types";
+import { AuthenticatedUser, UserLogin, UserRegister } from "../types";
 
-export const RegisterUser = async (user: User) => {
-  console.log("user: ", user);
+type RegisterResult = "Resolved" | "Rejected" | "Error";
 
-  const fetchResult = await fetch(
-    `${AppConfig.apiRootUrl}${AppConfig.registerPath}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: user.email,
-        password: user.password,
-        fullname: user.fullname,
-      }),
+export const RegisterUser: (
+  user: UserRegister
+) => Promise<RegisterResult> = async (user: UserRegister) => {
+  try {
+    const fetchResult = await fetch(
+      `${AppConfig.apiRootUrl}${AppConfig.registerPath}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user.email,
+          password: user.password,
+          fullname: user.fullname,
+        }),
+      }
+    );
+
+    const result = await fetchResult.json();
+    console.log("result: ", result);
+
+    if (result.code === 201) {
+      return "Resolved";
     }
-  );
 
-  const result = await fetchResult.json();
+    return "Rejected";
+  } catch (error) {
+    console.error("Error", error);
+    return "Error";
+  }
+};
 
-  console.log("result: ", result);
-  return result;
+type LoginResult = AuthenticatedUser | undefined;
+
+export const LoginUser: (user: UserLogin) => Promise<LoginResult> = async (
+  user: UserLogin
+) => {
+  try {
+    const fetchResult = await fetch(
+      `${AppConfig.apiRootUrl}${AppConfig.loginPath}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user.email,
+          password: user.password,
+          strategy: "local",
+        }),
+      }
+    );
+
+    const result = await fetchResult.json();
+    console.log("result: ", result);
+
+    if (result.accessToken) {
+      return {
+        ...result.user,
+        accessToken: result.accessToken,
+      };
+    }
+
+    return undefined;
+  } catch (error) {
+    console.error("Error", error);
+    return undefined;
+  }
 };

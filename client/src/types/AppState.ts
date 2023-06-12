@@ -1,6 +1,8 @@
+import { AuthenticatedUser } from "./User";
+
 export interface AppContextState {
-  auth: {
+  user: {
     loggedIn: boolean;
-    userId?: number;
+    authenticatedUser?: AuthenticatedUser;
   };
 }

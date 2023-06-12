@@ -4,6 +4,7 @@ export const StyledGlobal = createGlobalStyle`
 :root{
   --text-primary: #8EBCC7;
   --text-secondary: #00302c;
+  --text-error: red;
   --bg-primary: #192021;
   --bg-secondary: #779fa8;
 }
