@@ -4,7 +4,7 @@ import {
   configureStore,
   createSlice,
 } from "@reduxjs/toolkit";
-import { AppContextState } from "../types";
+import { AppContextState } from "../../types";
 
 const initialState: AppContextState = {
   auth: {

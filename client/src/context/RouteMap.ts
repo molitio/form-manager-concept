@@ -1,4 +1,4 @@
-import { Route, RouteMap } from "./types";
+import { Route, RouteMap } from "../types";
 
 export const routeMap: RouteMap = {
   root: {

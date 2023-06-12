@@ -6,30 +6,32 @@ import {
   StyledRegisterFormInput,
   StyledRegisterFormLabel,
 } from "../styled";
+import { RegisterUser } from "../services";
 
 const Register: React.FC = () => {
-  const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [user, setUser] = React.useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   const handleRegister = (event: React.FormEvent) => {
     event.preventDefault();
 
-    // Perform form validation
-    if (password !== confirmPassword) {
+    if (user.password !== user.confirmPassword) {
       alert("Passwords do not match");
       return;
     }
 
-    // Perform registration logic
-    // Call API, dispatch actions, etc.
-
-    // Reset form fields
-    setName("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
+    try {
+      const registrationResult = RegisterUser(
+        user.name,
+        user.email,
+        user.password
+      );
+      console.log("registration result", registrationResult);
+    } catch (error) {}
   };
 
   return (
@@ -40,8 +42,13 @@ const Register: React.FC = () => {
           type="text"
           id="name"
           name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={user.name}
+          onChange={(e) =>
+            setUser({
+              ...user,
+              name: e.target.value,
+            })
+          }
           required
         />
         <StyledRegisterFormLabel htmlFor="email">
@@ -51,8 +58,13 @@ const Register: React.FC = () => {
           type="email"
           id="email"
           name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={user.email}
+          onChange={(e) =>
+            setUser({
+              ...user,
+              email: e.target.value,
+            })
+          }
           required
         />
         <StyledRegisterFormLabel htmlFor="password">
@@ -62,8 +74,13 @@ const Register: React.FC = () => {
           type="password"
           id="password"
           name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={user.password}
+          onChange={(e) =>
+            setUser({
+              ...user,
+              password: e.target.value,
+            })
+          }
           required
         />
         <StyledRegisterFormLabel htmlFor="confirm-password">
@@ -73,8 +90,13 @@ const Register: React.FC = () => {
           type="password"
           id="confirm-password"
           name="confirm-password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          value={user.confirmPassword}
+          onChange={(e) =>
+            setUser({
+              ...user,
+              confirmPassword: e.target.value,
+            })
+          }
           required
         />
         <StyledRegisterFormButton type="submit">
