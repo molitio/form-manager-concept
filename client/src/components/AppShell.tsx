@@ -5,17 +5,20 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
+import { routeMap } from "../context";
 import AppLanding from "./AppLanding";
 import NavigationHeader from "./NavigationHeader";
 import Login from "./Login";
-import { routeMap } from "../context";
 import Register from "./Register";
+import Surveys from "./Surveys";
+import ErrorPage from "./ErrorPage";
 
 const AppShell: React.FC = () => {
   const routes: RouteObject[] = [
     {
       path: routeMap["root"].href,
       element: <AppLanding />,
+      errorElement: <ErrorPage />,
     },
     {
       path: routeMap["login"].href,
@@ -24,6 +27,10 @@ const AppShell: React.FC = () => {
     {
       path: routeMap["register"].href,
       element: <Register />,
+    },
+    {
+      path: routeMap["surveys"].href,
+      element: <Surveys />,
     },
   ];
 

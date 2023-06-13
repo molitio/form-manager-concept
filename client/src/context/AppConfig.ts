@@ -1,5 +1,3 @@
-import { routeMap } from "./RouteMap";
-
 export const AppConfig = {
   apiRootUrl: "http://localhost:3030",
   home: "/",

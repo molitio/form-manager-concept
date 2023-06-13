@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { RedirectLink } from "../components";
 
 export const StyledNavigationHeader = styled.nav`
   display: flex;
@@ -29,7 +31,7 @@ export const StyledNavigationRoute = styled.li`
   }
 `;
 
-export const StyledNavigationLink = styled.a`
+export const StyledNavigationLink = styled(RedirectLink)`
   text-decoration: none;
   color: inherit;
   padding: 0.5em;
