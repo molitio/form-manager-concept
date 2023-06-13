@@ -8,7 +8,6 @@ import {
 } from "../styled";
 import { useSelector } from "react-redux";
 import { RootState, displayRoute, routeMap } from "../context";
-import { Link, NavLink } from "react-router-dom";
 
 const NavigationHeader: React.FC = () => {
   const loggedIn = useSelector(
@@ -22,14 +21,13 @@ const NavigationHeader: React.FC = () => {
   return (
     <StyledNavigationHeader>
       <StyledNavigationBrandText href="/">
-        📓 Kérdőívek {username ? `üdvözlet ${username}` : ""}
+        📓 Kérdőívek {username && loggedIn ? `üdvözlet ${username}` : ""}
       </StyledNavigationBrandText>
       <StyledNavigationRouteCollection>
         {Object.entries(routeMap).map((route) =>
           displayRoute(route[1], loggedIn) ? (
             <StyledNavigationRoute key={route[0]}>
-              {/*               <Link to={route[1].href}> {route?.[1].displayText}</Link> */}
-              <StyledNavigationLink url={route[1].href}>
+              <StyledNavigationLink to={route[1].href}>
                 {route?.[1].displayText}
               </StyledNavigationLink>
             </StyledNavigationRoute>

@@ -7,5 +7,5 @@ export const AppConfig = {
   surveysPath: "/surveys",
   responsesPath: "/responses",
   profilePath: "/profile",
-  logoutPath: "/",
+  logoutPath: "/logout",
 };

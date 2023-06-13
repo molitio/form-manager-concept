@@ -31,7 +31,7 @@ export const StyledNavigationRoute = styled.li`
   }
 `;
 
-export const StyledNavigationLink = styled(RedirectLink)`
+export const StyledNavigationLink = styled(Link)`
   text-decoration: none;
   color: inherit;
   padding: 0.5em;

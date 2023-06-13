@@ -4,7 +4,6 @@ import {
   StyledAppLandingInfoText,
   StyledAppLandingTitle,
 } from "../styled";
-import RedirectLink from "./RedirectLink";
 
 export const AppLanding: React.FC = () => {
   return (
@@ -14,7 +13,6 @@ export const AppLanding: React.FC = () => {
       </StyledAppLandingTitle>
       <StyledAppLandingInfoText>
         Kérdőívek készítéséhez és kezeléséhez kérjük jelentkezz be.
-        <RedirectLink url="/login">Login</RedirectLink>
       </StyledAppLandingInfoText>
     </StyledAppLanding>
   );

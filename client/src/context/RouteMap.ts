@@ -36,7 +36,7 @@ export const routeMap: RouteMap = {
     requireAuth: true,
   },
 
-  logOut: {
+  logout: {
     displayText: "Kijelentkezés",
     href: AppConfig.logoutPath,
     requireAuth: true,
