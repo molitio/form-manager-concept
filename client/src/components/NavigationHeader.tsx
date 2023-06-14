@@ -21,7 +21,7 @@ const NavigationHeader: React.FC = () => {
   return (
     <StyledNavigationHeader>
       <StyledNavigationBrandText href="/">
-        📓 Kérdőívek {username && loggedIn ? `üdvözlet ${username}` : ""}
+        📓 Kérdőívek {username && loggedIn ? ` üdvözlet ${username}` : ""}
       </StyledNavigationBrandText>
       <StyledNavigationRouteCollection>
         {Object.entries(routeMap).map((route) =>

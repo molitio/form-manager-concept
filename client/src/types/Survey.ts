@@ -6,5 +6,13 @@ export type Survey = {
 };
 
 export type SurveyPage = {
-  [key: string]: string;
+  name: string;
+  questions: {
+    [key: string]: SurveyQuestion;
+  };
+};
+
+export type SurveyQuestion = {
+  question: string;
+  answer?: string;
 };
