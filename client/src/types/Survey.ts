@@ -1,18 +1,21 @@
 export type Survey = {
   name: string;
   content: {
-    [key: string]: SurveyPage;
+    surveyPages: Record<string, SurveyPage>;
   };
 };
 
 export type SurveyPage = {
   name: string;
-  questions: {
-    [key: string]: SurveyQuestion;
-  };
+  questions: Record<string, SurveyQuestion>;
 };
 
 export type SurveyQuestion = {
   question: string;
-  answer?: string;
+  answers?: Record<string, SurveyAnswer>;
+};
+
+export type SurveyAnswer = {
+  answer: string;
+  dateCreate: string;
 };

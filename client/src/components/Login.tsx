@@ -79,7 +79,7 @@ const Login: React.FC = () => {
           }
           required
         />
-        <StyledFormLabel htmlFor="password">Jelszó:</StyledFormLabel>
+        <StyledFormLabel htmlFor="password">Password:</StyledFormLabel>
         <StyledFormInput
           type="password"
           id="password"

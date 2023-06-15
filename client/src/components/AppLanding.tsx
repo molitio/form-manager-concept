@@ -9,10 +9,10 @@ export const AppLanding: React.FC = () => {
   return (
     <StyledAppLanding>
       <StyledAppLandingTitle>
-        Üdvözöllek a Kérdőivek alkalmazásban.
+        Welcome to the Surveys application
       </StyledAppLandingTitle>
       <StyledAppLandingInfoText>
-        Kérdőívek készítéséhez és kezeléséhez kérjük jelentkezz be.
+        To view and manages surveys, please log in.
       </StyledAppLandingInfoText>
     </StyledAppLanding>
   );

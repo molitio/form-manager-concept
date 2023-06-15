@@ -8,7 +8,7 @@ export const RegisterUser: (
 ) => Promise<RegisterResult> = async (user: UserRegister) => {
   try {
     const fetchResult = await fetch(
-      `${AppConfig.apiRootUrl}${AppConfig.registerPath}`,
+      `${AppConfig.apiRootUrl}${AppConfig.apiRegisterPath}`,
       {
         method: "POST",
         headers: {

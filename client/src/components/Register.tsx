@@ -47,7 +47,7 @@ const Register: React.FC = () => {
   return (
     <StyledRegister>
       <StyledForm onSubmit={handleRegister}>
-        <StyledFormLabel htmlFor="name">Név:</StyledFormLabel>
+        <StyledFormLabel htmlFor="name">Name:</StyledFormLabel>
         <StyledFormInput
           type="text"
           id="name"
@@ -75,7 +75,7 @@ const Register: React.FC = () => {
           }
           required
         />
-        <StyledFormLabel htmlFor="password">Jelszó:</StyledFormLabel>
+        <StyledFormLabel htmlFor="password">Password:</StyledFormLabel>
         <StyledFormInput
           type="password"
           id="password"
@@ -90,7 +90,7 @@ const Register: React.FC = () => {
           required
         />
         <StyledFormLabel htmlFor="confirm-password">
-          Jelszó megerősítése:
+          Confirm Password:
         </StyledFormLabel>
         <StyledFormInput
           type="password"
@@ -105,7 +105,7 @@ const Register: React.FC = () => {
           }
           required
         />
-        <StyledFormButton type="submit">Regisztráció</StyledFormButton>
+        <StyledFormButton type="submit">Register</StyledFormButton>
       </StyledForm>
     </StyledRegister>
   );

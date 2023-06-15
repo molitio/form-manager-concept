@@ -5,3 +5,5 @@ export * from "./StyledAppShell";
 export * from "./StyledRegister";
 export * from "./StyledLogin";
 export * from "./StyledForm";
+export * from "./StyledSurveyView";
+export * from "./StyledSurveyEdit";

@@ -9,35 +9,35 @@ export const routeMap: RouteMap = {
     hidden: true,
   },
   login: {
-    displayText: "Bejelentkezés",
+    displayText: "Login",
     href: AppConfig.loginPath,
     requireAuth: false,
   },
   register: {
-    displayText: "Regisztráció",
+    displayText: "Register",
     href: AppConfig.registerPath,
     requireAuth: false,
   },
   surveys: {
-    displayText: "Kérdőíveim",
+    displayText: "Surveys",
     href: AppConfig.surveysPath,
     requireAuth: true,
   },
 
   responses: {
-    displayText: "Válaszok",
+    displayText: "Responses",
     href: AppConfig.responsesPath,
     requireAuth: true,
   },
 
   profiles: {
-    displayText: "Profil",
+    displayText: "Profile",
     href: AppConfig.profilePath,
     requireAuth: true,
   },
 
   logout: {
-    displayText: "Kijelentkezés",
+    displayText: "Logout",
     href: AppConfig.logoutPath,
     requireAuth: true,
   },
