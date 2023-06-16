@@ -169,8 +169,13 @@ Az egész projektet tömörítsd be, kliensestül, szerverestül, és azt tölts
 - Főoldal megjelenik (1pt)  - complete
 - Regisztráció működik (1pt) - complete
 - Bejelentkezés működik (1pt) - complete
+
 - Új kérdőív, Kérdőíveim: csak bejelentkezve érhetőek el (1pt) - complete
 - Új kérdőív: új kérdőív mentésének helyes működése (2pt)
+
+- Profil: csak bejelentkezve érhető el, megfelelő tartalommal (2pt)
+- Profil: Kijelentkezés gomb működik (1pt)
+
 - Kérdőíveim: megjelennek a kérdőívek az elérhető funkciókkal (2pt)
 - Kérdőíveim: módosítás helyes működése (2pt)
 - Kérdőíveim: törlés helyes működése (2pt)
@@ -181,8 +186,7 @@ Az egész projektet tömörítsd be, kliensestül, szerverestül, és azt tölts
 - Kérdőív: lapozón vizuálisan látszik, hogy mely lapnál tartunk (1pt)
 - Kérdőív: beküldés helyes működése (2pt)
 - Válaszok: a kiválasztott kérdőívre adott válaszok megjelennek (2pt)
-- Profil: csak bejelentkezve érhető el, megfelelő tartalommal (2pt)
-- Profil: Kijelentkezés gomb működik (1pt)
+
 - Igényes megjelenés (2pt)
 - Pluszok: a kérdőíveim lista lapozható (pl. 5-ösével) (+2pt)
 - Pluszok: a válaszok lista lapozható (pl. 10-esével) (+2pt)

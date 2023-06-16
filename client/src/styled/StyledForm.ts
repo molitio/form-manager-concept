@@ -24,3 +24,17 @@ export const StyledFormInput = styled.input`
   background-color: var(--bg-primary);
   border: 1px solid var(--bg-secondary);
 `;
+
+export const StyledFormTextArea = styled.textarea`
+  padding: 0.5em;
+  border-radius: 0.5em;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--bg-secondary);
+  resize: vertical;
+  grid-column: 1 / span 2;
+  &:focus {
+    outline: none;
+    border: 2px solid var(--bg-secondary);
+  }
+`;
