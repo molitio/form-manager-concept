@@ -8,14 +8,18 @@ export const StyledGlobal = createGlobalStyle`
   --bg-primary: #192021;
   --bg-secondary: #779fa8;
 }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5em;
+}
 
 body {
   background-color: var(--bg-primary);
   font-size: 16px;
   font-family: "Gill Sans";
   color: var(--text-primary);
-  margin: 0;
-  padding: 0;
 }
 `;
 

@@ -163,13 +163,13 @@ Az egész projektet tömörítsd be, kliensestül, szerverestül, és azt tölts
 
 Összesen 30 pont érhető el.
 
-- React használata (kötelező)
-- Redux használata (kötelező)
-- Navigáció megfelelően változik a be- és kijelentkezésnek megfelelően (1pt)
-- Főoldal megjelenik (1pt)
-- Regisztráció működik (1pt)
-- Bejelentkezés működik (1pt)
-- Új kérdőív, Kérdőíveim: csak bejelentkezve érhetőek el (1pt)
+- React használata (kötelező) - complete
+- Redux használata (kötelező) - complete
+- Navigáció megfelelően változik a be- és kijelentkezésnek megfelelően (1pt) - not complete, redirect after successful register
+- Főoldal megjelenik (1pt)  - complete
+- Regisztráció működik (1pt) - complete
+- Bejelentkezés működik (1pt) - complete
+- Új kérdőív, Kérdőíveim: csak bejelentkezve érhetőek el (1pt) - complete
 - Új kérdőív: új kérdőív mentésének helyes működése (2pt)
 - Kérdőíveim: megjelennek a kérdőívek az elérhető funkciókkal (2pt)
 - Kérdőíveim: módosítás helyes működése (2pt)

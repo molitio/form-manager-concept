@@ -7,3 +7,4 @@ export * from "./StyledLogin";
 export * from "./StyledForm";
 export * from "./StyledSurveyView";
 export * from "./StyledSurveyEdit";
+export * from "./StyledInputButton";

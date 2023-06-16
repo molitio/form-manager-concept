@@ -7,7 +7,7 @@ export type Survey = {
 
 export type SurveyPage = {
   name: string;
-  questions: Record<string, SurveyQuestion>;
+  questions: Record<number, SurveyQuestion>;
 };
 
 export type SurveyQuestion = {
