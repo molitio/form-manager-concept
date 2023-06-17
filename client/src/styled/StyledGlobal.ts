@@ -5,8 +5,10 @@ export const StyledGlobal = createGlobalStyle`
   --text-primary: #8EBCC7;
   --text-secondary: #00302c;
   --text-error: red;
+  --bg-warning-soft: orange;
   --bg-primary: #192021;
   --bg-secondary: #779fa8;
+  --bg-disabled: grey;
 }
 * {
   box-sizing: border-box;
@@ -27,7 +29,17 @@ export const StyledPage = styled.main`
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   min-height: 80vh;
+  padding: 1em 0 0 0;
+`;
+
+export const StyledSection = styled.section`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1em 0 0 0;
 `;

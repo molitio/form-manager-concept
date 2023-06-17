@@ -8,3 +8,6 @@ export * from "./StyledForm";
 export * from "./StyledSurveyView";
 export * from "./StyledSurveyEdit";
 export * from "./StyledInputButton";
+export * from "./StyledSurveys";
+export * from "./StyledControls";
+export * from "./StyledSurveyNew";

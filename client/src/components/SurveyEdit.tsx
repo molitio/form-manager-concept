@@ -1,5 +1,5 @@
 import React from "react";
-import { SurveyPage } from "../types";
+import { Survey, SurveyPage } from "../types";
 import {
   StyledForm,
   StyledFormButton,
@@ -8,50 +8,96 @@ import {
 } from "../styled";
 import SurveyView from "./SurveyView";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, setSelectedSurveyFromInput } from "../context";
+import {
+  RootState,
+  setSelectedSurvey,
+  setSelectedSurveyFromInput,
+} from "../context";
+import { SubmitSurvey, isSurveyValid } from "../services";
 
 type SurveyEditProps = {
   surveyId?: string;
 };
 
-// can edit existing or create a new Survey
-
 const SurveyEdit: React.FC<SurveyEditProps> = (props) => {
   const { surveyId } = props;
+
+  const [inputDisabled, setInputDisabled] = React.useState<boolean>(true);
+
+  const [inputValue, setInputValue] = React.useState<string>("");
 
   const dispatch = useDispatch();
 
   const selectedSurvey = useSelector(
     (state: RootState) => state.survey?.selectedSurvey
   );
+  const token = useSelector(
+    (state: RootState) => state?.auth?.user?.authenticatedUser?.accessToken
+  );
 
   React.useEffect(() => {
     //if survey id present get survey, if not create a new one
-  }, [surveyId]);
+    console.log("update");
+    dispatch(setSelectedSurveyFromInput(inputValue));
+  }, [inputValue, surveyId]);
 
-  const handleCreateNewSurvey = (event: React.FormEvent) => {
-    // send to db
+  React.useEffect(() => {
+    console.log("isSurveyValid: ", isSurveyValid(selectedSurvey));
+    setInputDisabled(!isSurveyValid(selectedSurvey));
+  }, [selectedSurvey]);
+
+  const handleSubmitNewSurvey = (event: React.FormEvent) => {
+    console.log("submit");
+    console.log("isSurveyValid: ", isSurveyValid(selectedSurvey));
+    event.preventDefault();
+    if (!isSurveyValid(selectedSurvey)) {
+      return;
+    }
+
+    const Submit = async () => {
+      const submitSurveyResponse = await SubmitSurvey(
+        token ?? "",
+        selectedSurvey
+      );
+      if (submitSurveyResponse === "Resolved") {
+        dispatch(setSelectedSurvey({ name: "" }));
+        setInputValue("");
+        setInputDisabled(!isSurveyValid(selectedSurvey));
+      }
+      console.log("response: ", submitSurveyResponse);
+    };
+
+    Submit();
+  };
+
+  const handleFormInputChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    {
+      setInputValue(event.target.value);
+    }
   };
 
   return (
     <StyledSurveyEdit>
-      <StyledForm onSubmit={handleCreateNewSurvey}>
-        survey edit id: {surveyId}
-        <br />
-        survey edit name: {selectedSurvey?.name}
-        <br />
-        <br />
+      <StyledForm onSubmit={handleSubmitNewSurvey}>
         <StyledFormTextArea
           id="survey-name"
           name="survey-name"
           placeholder="Start typing the survey..."
-          onChange={(e) => {
-            dispatch(setSelectedSurveyFromInput(e.target.value));
-          }}
+          value={inputValue}
+          onChange={handleFormInputChange}
+          rows={12}
           required
         />
-        <StyledFormButton type="submit">Add</StyledFormButton>
-        <SurveyView survey={selectedSurvey} />
+        <StyledFormButton
+          disabled={inputDisabled}
+          inputDisabled={inputDisabled}
+          type="submit"
+        >
+          Submit
+        </StyledFormButton>
+        {selectedSurvey ? <SurveyView survey={selectedSurvey} /> : ""}
       </StyledForm>
     </StyledSurveyEdit>
   );

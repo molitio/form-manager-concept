@@ -9,8 +9,9 @@ export const StyledNavigationHeader = styled.nav`
 
 export const StyledNavigationBrandText = styled.a`
   text-decoration: none;
+  white-space: nowrap;
   margin: 0;
-  padding: 0 1em;
+  padding: 0 0 0 1em;
   &:visited {
     color: var(--text-primary);
   }
@@ -19,7 +20,8 @@ export const StyledNavigationBrandText = styled.a`
 export const StyledNavigationRouteCollection = styled.ul`
   flex: 1;
   display: flex;
-  margin: 1em 5em;
+  flex-wrap: wrap;
+  padding: 1em;
   gap: 1em;
   list-style: none;
   justify-content: flex-end;
@@ -34,7 +36,9 @@ export const StyledNavigationRoute = styled.li`
 export const StyledNavigationLink = styled(Link)`
   text-decoration: none;
   color: inherit;
+  white-space: nowrap;
   padding: 0.5em;
+
   &:hover {
     background-color: var(--bg-secondary);
     border-radius: 0.5em;

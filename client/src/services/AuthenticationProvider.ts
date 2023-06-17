@@ -23,9 +23,7 @@ export const RegisterUser: (
     );
 
     const result = await fetchResult.json();
-    console.log("result: ", result);
-
-    if (result.code === 201) {
+    if (result.id > 0) {
       return "Resolved";
     }
 

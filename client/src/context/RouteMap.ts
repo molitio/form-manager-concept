@@ -18,6 +18,12 @@ export const routeMap: RouteMap = {
     href: AppConfig.registerPath,
     requireAuth: false,
   },
+  newSurvey: {
+    displayText: "New Survey",
+    href: AppConfig.newSurveysPath,
+    requireAuth: true,
+  },
+
   surveys: {
     displayText: "Surveys",
     href: AppConfig.surveysPath,

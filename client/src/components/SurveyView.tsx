@@ -9,18 +9,18 @@ type SurveyViewProps = {
 const SurveyView: React.FC<SurveyViewProps> = (props) => {
   const { survey } = props;
 
-  const content = survey?.content;
+  const content = survey?.contentObject;
   const pages = content?.surveyPages;
 
   return survey ? (
     <StyledSurveyView>
-      s: {survey.name}
+      {survey.name.length === 0 ? "" : `s: ${survey.name}`}
       {Object.keys(pages ?? {}).map((page) => (
         <div key={page}>
           <h3>{pages?.[page]?.name}</h3>
-          {Object.keys(pages?.[page]?.questions ?? {}).map((question) => (
+          {Object.keys(pages?.[page]?.questions ?? {}).map((question, i) => (
             <>
-              <div key={question}>{`q: ${
+              <div key={i}>{`q: ${
                 pages?.[page]?.questions[parseInt(question)].question
               }`}</div>
 

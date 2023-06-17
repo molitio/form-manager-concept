@@ -8,8 +8,11 @@ import {
 } from "../styled";
 import { RegisterUser } from "../services";
 import { UserRegister } from "../types";
+import { AppConfig } from "../context";
+import { useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
+  const navigate = useNavigate();
   const [user, setUser] = React.useState<UserRegister>({
     fullname: "",
     email: "",
@@ -17,7 +20,7 @@ const Register: React.FC = () => {
     confirmPassword: "",
   });
 
-  const handleRegister = (event: React.FormEvent) => {
+  const handleRegister = async (event: React.FormEvent) => {
     event.preventDefault();
 
     if (user.password !== user.confirmPassword) {
@@ -26,19 +29,19 @@ const Register: React.FC = () => {
     }
 
     try {
-      const Register = async () => {
-        const registrationResult = await RegisterUser(user);
-        if (registrationResult === "Resolved") {
-          setUser({
-            fullname: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-          });
-        }
-      };
+      const registrationResult = await RegisterUser(user);
+      if (registrationResult === "Resolved") {
+        setUser({
+          fullname: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
+      }
 
-      Register();
+      if (registrationResult === "Resolved") {
+        navigate(`${AppConfig.home}`);
+      }
     } catch (error) {
       console.error("Error: ", error);
     }

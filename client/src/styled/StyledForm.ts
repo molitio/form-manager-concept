@@ -8,13 +8,28 @@ export const StyledForm = styled.form`
 `;
 
 export const StyledFormLabel = styled.label``;
-export const StyledFormButton = styled.button`
+
+type StyledFormButtonProps = {
+  inputDisabled?: boolean;
+};
+
+export const StyledFormButton = styled.button<StyledFormButtonProps>`
   color: var(--text-secondary);
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--bg-primary);
+  background-color: ${(props) =>
+    props?.inputDisabled ? `var(--bg-disabled)` : `var(--bg-secondary)`};
+  border: ${(props) =>
+    props?.inputDisabled
+      ? `1px solid var(--bg-warning-soft)`
+      : `2px solid var(--bg-primary)`};
   border-radius: 0.5em;
   padding: 0.5em;
   grid-column: 1 / span 2;
+  &:hover {
+    cursor: pointer;
+  }
+  &:hover:disabled {
+    cursor: not-allowed;
+  }
 `;
 
 export const StyledFormInput = styled.input`

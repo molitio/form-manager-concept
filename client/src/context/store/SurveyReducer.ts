@@ -10,10 +10,10 @@ const initialState: SurveyStoreState = {};
 
 const parseSurveyInput = (input: string): Survey | null => {
   const lines = input.trim().split("\n");
-
-  if (lines.length < 3) {
-    // Invalid input, must have at least 3 lines
-    return null;
+  if (lines.length === 0) {
+    return {
+      name: "",
+    };
   }
 
   const name = lines[0].trim();
@@ -23,6 +23,18 @@ const parseSurveyInput = (input: string): Survey | null => {
   let currentPage: SurveyPage | null = null;
   let questionIndex = 1;
   let currentPageIdCounter = 1;
+
+  if (lines.length < 3) {
+    return {
+      name,
+      contentObject: {
+        surveyPages,
+      },
+    };
+
+    // Invalid input, must have at least 3 lines
+    /*  return null; */
+  }
 
   for (let i = 1; i < lines.length; i++) {
     const line = lines[i].trim();
@@ -63,14 +75,16 @@ const parseSurveyInput = (input: string): Survey | null => {
 
   console.log("survey: ", {
     name,
-    content: {
+    content: input,
+    contentObject: {
       surveyPages,
     },
   });
 
   return {
     name,
-    content: {
+    content: input,
+    contentObject: {
       surveyPages,
     },
   };
@@ -93,7 +107,7 @@ const surveySlice = createSlice({
 
       const parsedSurvey = parseSurveyInput(action.payload);
       if (parsedSurvey) {
-        state.selectedSurvey = parsedSurvey;
+        state.selectedSurvey = { ...parsedSurvey };
       }
     },
   },

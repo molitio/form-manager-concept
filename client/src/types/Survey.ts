@@ -1,6 +1,7 @@
 export type Survey = {
   name: string;
-  content: {
+  content?: string;
+  contentObject?: {
     surveyPages: Record<string, SurveyPage>;
   };
 };
