@@ -10,7 +10,6 @@ const Logout: React.FC = () => {
   );
 
   React.useEffect(() => {
-    console.log("logout");
     dispatch(setLoggedIn(false));
   }, []);
   return <></>;

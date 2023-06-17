@@ -9,25 +9,21 @@ const surveySlice = createSlice({
   initialState,
   reducers: {
     setSelectedSurvey: (state, action: PayloadAction<Survey>) => {
-      if (state.selectedSurvey) {
-        state.selectedSurvey = action.payload;
-      }
-      console.log("action payload", action.payload);
+      if (!action.payload) return;
+
+      state.selectedSurvey = action.payload;
     },
     setSelectedSurveyFromInput: (state, action: PayloadAction<string>) => {
-      console.log("payload", action.payload);
       if (!action.payload) {
         return;
       }
 
       const parsedSurvey = parseSurveyInput(action.payload);
-      if (parsedSurvey) {
-        state.selectedSurvey = { ...parsedSurvey };
+      if (parsedSurvey && state.selectedSurvey) {
+        state.selectedSurvey = { ...state.selectedSurvey, ...parsedSurvey };
       }
     },
     setSuveyCollection: (state, action: PayloadAction<Survey[]>) => {
-      console.log("payload", action.payload);
-
       state.surveyCollection = action.payload;
     },
   },

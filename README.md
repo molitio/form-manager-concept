@@ -193,6 +193,6 @@ Az egész projektet tömörítsd be, kliensestül, szerverestül, és azt tölts
 
 - Pluszok: a kérdőíveim lista lapozható (pl. 5-ösével) (+2pt)
 - Pluszok: a válaszok lista lapozható (pl. 10-esével) (+2pt)
-- Pluszok: a kérdőív linkje egy gombra kattintva a vágólapra másolható (+1pt)
-- 1 hét késés (-3pt)
+- Pluszok: a kérdőív linkje egy gombra kattintva a vágólapra másolható (+1pt) - complete
+- 1 hét késés (-3pt) - active
 - 2 hét késés (-6pt)

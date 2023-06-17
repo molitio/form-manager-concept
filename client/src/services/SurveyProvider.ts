@@ -3,16 +3,14 @@ import { Survey, SurveyPage, SurveyQuestion } from "../types";
 import { PromiseResult, SurveyLimits } from "./types";
 
 export const submitSurvey: (
-  token: string,
-  survey?: Survey
-) => Promise<PromiseResult> = async (token: string, survey?: Survey) => {
-  if (!survey) return "Rejected";
+  survey: Survey,
+  token: string
+) => Promise<PromiseResult> = async (survey: Survey, token: string) => {
+  if (!survey.content) return "Rejected";
   const surveyString = JSON.stringify({
     name: survey.name,
     content: survey.content,
   });
-
-  console.log("survey string: ", surveyString);
 
   try {
     const fetchResult = await fetch(
@@ -28,7 +26,6 @@ export const submitSurvey: (
     );
 
     const result = await fetchResult.json();
-    console.log("result: ", result);
 
     if (result.id > 0) {
       return "Resolved";
@@ -38,6 +35,40 @@ export const submitSurvey: (
   } catch (error) {
     console.error("Error", error);
     return "Error";
+  }
+};
+
+export const getSurvey: (
+  surveyId: number,
+  userId: number,
+  token: string
+) => Promise<Survey> = async (
+  surveyId: number,
+  userId: number,
+  token: string
+) => {
+  try {
+    const fetchResult = await fetch(
+      `${AppConfig.apiRootUrl}${AppConfig.apiSurveysPath}/${surveyId}?userId=${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const result = await fetchResult.json();
+
+    if (result) {
+      return result;
+    }
+
+    return { name: "" };
+  } catch (error) {
+    console.error("Error", error);
+    return { name: "" };
   }
 };
 
@@ -58,16 +89,51 @@ export const getSurveyWithLimits: (
     );
 
     const result = await fetchResult.json();
-    console.log("result: ", result);
 
     if (result.data.length > 0) {
-      return result.data;
+      return result.data as Survey[];
     }
 
     return [];
   } catch (error) {
     console.error("Error", error);
     return [];
+  }
+};
+
+export const updateSurvey: (
+  survey: Survey,
+  token: string
+) => Promise<PromiseResult> = async (survey: Survey, token: string) => {
+  if (!survey) return "Rejected";
+  const surveyString = JSON.stringify({
+    name: survey.name,
+    content: survey.content,
+  });
+
+  try {
+    const fetchResult = await fetch(
+      `${AppConfig.apiRootUrl}${AppConfig.apiSurveysPath}/${survey.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: surveyString,
+      }
+    );
+
+    const result = await fetchResult.json();
+
+    if (result.id > 0) {
+      return "Resolved";
+    }
+
+    return "Rejected";
+  } catch (error) {
+    console.error("Error", error);
+    return "Error";
   }
 };
 
@@ -89,7 +155,6 @@ export const deleteSurvey: (
     );
 
     const result = await fetchResult.json();
-    console.log("result: ", result);
 
     if (result.id > 0) {
       return "Resolved";
@@ -102,10 +167,11 @@ export const deleteSurvey: (
   }
 };
 
-export const isSurveyValid = (survey?: Survey): boolean => {
+export const isSurveyValid = (survey: Survey): boolean => {
   if (!survey) {
     return false;
   }
+
   // Check if the survey has a non-empty name
   if (survey.name.trim().length === 0) {
     return false;
@@ -206,14 +272,6 @@ export const parseSurveyInput = (input: string): Survey | null => {
   if (currentPageId && currentPage) {
     surveyPages[currentPageId] = currentPage;
   }
-
-  console.log("survey: ", {
-    name,
-    content: input,
-    contentObject: {
-      surveyPages,
-    },
-  });
 
   return {
     name,

@@ -13,10 +13,15 @@ import {
   setSelectedSurvey,
   setSelectedSurveyFromInput,
 } from "../context";
-import { submitSurvey, isSurveyValid } from "../services";
+import {
+  submitSurvey,
+  isSurveyValid,
+  getSurvey,
+  updateSurvey,
+} from "../services";
 
 type SurveyEditProps = {
-  surveyId?: string;
+  surveyId?: number;
 };
 
 const SurveyEdit: React.FC<SurveyEditProps> = (props) => {
@@ -32,40 +37,72 @@ const SurveyEdit: React.FC<SurveyEditProps> = (props) => {
     (state: RootState) => state.survey?.selectedSurvey
   );
 
-  const token = useSelector(
-    (state: RootState) => state?.auth?.user?.authenticatedUser?.accessToken
+  const authenticatedUser = useSelector(
+    (state: RootState) => state?.auth?.user?.authenticatedUser
   );
 
   React.useEffect(() => {
     if (inputValue.length === 0) {
       dispatch(setSelectedSurvey({ name: "" }));
     }
+
     dispatch(setSelectedSurveyFromInput(inputValue));
-  }, [inputValue, surveyId]);
+  }, [inputValue]);
 
   React.useEffect(() => {
+    if (!surveyId || !authenticatedUser) return;
+
+    const getExistingSurvey = async () => {
+      const survey = await getSurvey(
+        surveyId,
+        authenticatedUser.id,
+        authenticatedUser?.accessToken
+      );
+
+      if (survey) {
+        dispatch(setSelectedSurvey(survey));
+        setInputValue(survey.content ?? "");
+      }
+    };
+    getExistingSurvey();
+  }, [surveyId]);
+
+  React.useEffect(() => {
+    if (!selectedSurvey) return;
+    console.log("fire validation");
     setInputDisabled(!isSurveyValid(selectedSurvey));
   }, [selectedSurvey]);
 
   const handleSubmitNewSurvey = (event: React.FormEvent) => {
+    if (!selectedSurvey) return;
     event.preventDefault();
     if (!isSurveyValid(selectedSurvey)) {
       return;
     }
 
-    const Submit = async () => {
+    const submit = async () => {
       const submitSurveyResponse = await submitSurvey(
-        token ?? "",
-        selectedSurvey
+        selectedSurvey ?? { name: "" },
+        authenticatedUser?.accessToken ?? ""
       );
       if (submitSurveyResponse === "Resolved") {
         dispatch(setSelectedSurvey({ name: "" }));
         setInputValue("");
-        setInputDisabled(!isSurveyValid(selectedSurvey));
       }
     };
 
-    Submit();
+    const edit = async () => {
+      const editSurveyResponse = await updateSurvey(
+        selectedSurvey ?? { name: "" },
+        authenticatedUser?.accessToken ?? ""
+      );
+      if (editSurveyResponse === "Resolved") {
+        dispatch(setSelectedSurvey({ name: "" }));
+        setInputValue("");
+      }
+    };
+
+    surveyId ? edit() : submit();
   };
 
   const handleFormInputChange = (
@@ -78,6 +115,7 @@ const SurveyEdit: React.FC<SurveyEditProps> = (props) => {
 
   return (
     <StyledSurveyEdit>
+      {selectedSurvey?.createdAt ?? "empty"}
       <StyledForm onSubmit={handleSubmitNewSurvey}>
         <StyledFormTextArea
           id="survey-name"
@@ -93,7 +131,7 @@ const SurveyEdit: React.FC<SurveyEditProps> = (props) => {
           inputDisabled={inputDisabled}
           type="submit"
         >
-          Submit
+          {surveyId ? "Edit" : "Submit"}
         </StyledFormButton>
         {selectedSurvey ? <SurveyView survey={selectedSurvey} /> : ""}
       </StyledForm>

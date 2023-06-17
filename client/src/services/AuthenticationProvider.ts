@@ -56,7 +56,6 @@ export const LoginUser: (user: UserLogin) => Promise<LoginResult> = async (
     );
 
     const result = await fetchResult.json();
-    console.log("result: ", result);
 
     if (result.accessToken) {
       return {

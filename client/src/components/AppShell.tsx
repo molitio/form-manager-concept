@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { RootState, routeMap } from "../context";
+import { AppConfig, RootState, routeMap } from "../context";
 import { StyledAppShell, StyledGlobal } from "../styled";
 import AppLanding from "./AppLanding";
 import Login from "./Login";
@@ -13,6 +13,8 @@ import Responses from "./Responses";
 import SurveyNew from "./SurveyNew";
 import Profile from "./Profile";
 import NavigationHeader from "./NavigationHeader";
+import SurveyEdit from "./SurveyEdit";
+import SurveyEditor from "./SurveyEditor";
 
 const AppShell: React.FC = () => {
   const loggedIn = useSelector(
@@ -36,6 +38,10 @@ const AppShell: React.FC = () => {
                 path={routeMap["newSurvey"].href}
                 element={<SurveyNew />}
               />
+              <Route
+                path={`${AppConfig.editSurveysPath}/:surveyId`}
+                element={<SurveyEditor />}
+              />
               <Route path={routeMap["surveys"].href} element={<Surveys />} />
               <Route
                 path={routeMap["responses"].href}
@@ -48,7 +54,7 @@ const AppShell: React.FC = () => {
           ) : (
             <></>
           )}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          {/*           <Route path="*" element={<Navigate to="/" replace />} /> */}
         </Routes>
       </BrowserRouter>
       <StyledGlobal />

@@ -36,7 +36,6 @@ const Login: React.FC = () => {
 
   const handleLogin = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("login");
     try {
       const Login = async () => {
         const loginResult = await LoginUser(authenticatedUser);
