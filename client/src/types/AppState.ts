@@ -10,5 +10,5 @@ export type AuthStoreState = {
 
 export type SurveyStoreState = {
   selectedSurvey?: Survey;
-  surveyCollection?: Record<string, Survey>;
+  surveyCollection?: Survey[];
 };
