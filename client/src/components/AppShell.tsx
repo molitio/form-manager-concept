@@ -32,12 +32,11 @@ const AppShell: React.FC = () => {
           <Route path={routeMap["register"].href} element={<Register />} />
           {loggedIn ? (
             <>
-              <Route path={routeMap["surveys"].href} element={<Surveys />}>
-                <Route
-                  path={routeMap["newSurvey"].href}
-                  element={<SurveyNew />}
-                />
-              </Route>
+              <Route
+                path={routeMap["newSurvey"].href}
+                element={<SurveyNew />}
+              />
+              <Route path={routeMap["surveys"].href} element={<Surveys />} />
               <Route
                 path={routeMap["responses"].href}
                 element={<Responses />}

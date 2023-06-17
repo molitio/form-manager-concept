@@ -1,5 +1,8 @@
 export type Survey = {
+  id?: number;
   name: string;
+  createdAt?: number;
+  hash?: string;
   content?: string;
   contentObject?: {
     surveyPages: Record<string, SurveyPage>;

@@ -177,9 +177,9 @@ Az egész projektet tömörítsd be, kliensestül, szerverestül, és azt tölts
 - Profil: csak bejelentkezve érhető el, megfelelő tartalommal (2pt) - complete
 - Profil: Kijelentkezés gomb működik (1pt) - complete
 
-- Kérdőíveim: megjelennek a kérdőívek az elérhető funkciókkal (2pt)
+- Kérdőíveim: megjelennek a kérdőívek az elérhető funkciókkal (2pt) - complete
 - Kérdőíveim: módosítás helyes működése (2pt)
-- Kérdőíveim: törlés helyes működése (2pt)
+- Kérdőíveim: törlés helyes működése (2pt) - complete
 - Kérdőíveim: hivatkozás helyes működése (1pt)
 
 - Kérdőív: a kérdőív kérdései megjelennek (3pt)

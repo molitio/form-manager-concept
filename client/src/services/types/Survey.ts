@@ -1,4 +1,4 @@
-export type SubmitSurveyResult = "Resolved" | "Rejected" | "Error";
+export type PromiseResult = "Resolved" | "Rejected" | "Error";
 
 export type SurveyLimits = {
   userId: number;

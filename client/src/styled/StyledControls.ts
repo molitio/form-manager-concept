@@ -7,6 +7,7 @@ export const StyledHeader = styled.h1`
 
 export const StyledButton = styled.button`
   align-self: flex-start;
+  width: 100%;
   color: var(--text-secondary);
   background-color: var(--bg-secondary);
   border: 2px solid var(--bg-primary);

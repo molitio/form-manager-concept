@@ -12,3 +12,4 @@ export * from "./StyledSurveys";
 export * from "./StyledControls";
 export * from "./StyledSurveyNew";
 export * from "./StyledProfile";
+export * from "./StyledSurveyDate";

@@ -13,7 +13,7 @@ import {
   setSelectedSurvey,
   setSelectedSurveyFromInput,
 } from "../context";
-import { SubmitSurvey, isSurveyValid } from "../services";
+import { submitSurvey, isSurveyValid } from "../services";
 
 type SurveyEditProps = {
   surveyId?: string;
@@ -31,31 +31,30 @@ const SurveyEdit: React.FC<SurveyEditProps> = (props) => {
   const selectedSurvey = useSelector(
     (state: RootState) => state.survey?.selectedSurvey
   );
+
   const token = useSelector(
     (state: RootState) => state?.auth?.user?.authenticatedUser?.accessToken
   );
 
   React.useEffect(() => {
-    //if survey id present get survey, if not create a new one
-    console.log("update");
+    if (inputValue.length === 0) {
+      dispatch(setSelectedSurvey({ name: "" }));
+    }
     dispatch(setSelectedSurveyFromInput(inputValue));
   }, [inputValue, surveyId]);
 
   React.useEffect(() => {
-    console.log("isSurveyValid: ", isSurveyValid(selectedSurvey));
     setInputDisabled(!isSurveyValid(selectedSurvey));
   }, [selectedSurvey]);
 
   const handleSubmitNewSurvey = (event: React.FormEvent) => {
-    console.log("submit");
-    console.log("isSurveyValid: ", isSurveyValid(selectedSurvey));
     event.preventDefault();
     if (!isSurveyValid(selectedSurvey)) {
       return;
     }
 
     const Submit = async () => {
-      const submitSurveyResponse = await SubmitSurvey(
+      const submitSurveyResponse = await submitSurvey(
         token ?? "",
         selectedSurvey
       );
@@ -64,7 +63,6 @@ const SurveyEdit: React.FC<SurveyEditProps> = (props) => {
         setInputValue("");
         setInputDisabled(!isSurveyValid(selectedSurvey));
       }
-      console.log("response: ", submitSurveyResponse);
     };
 
     Submit();

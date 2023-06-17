@@ -1,12 +1,11 @@
-import { useSelector } from "react-redux";
-import { AppConfig, RootState } from "../context";
+import { AppConfig } from "../context";
 import { Survey, SurveyPage, SurveyQuestion } from "../types";
-import { SubmitSurveyResult, SurveyLimits } from "./types";
+import { PromiseResult, SurveyLimits } from "./types";
 
-export const SubmitSurvey: (
+export const submitSurvey: (
   token: string,
   survey?: Survey
-) => Promise<SubmitSurveyResult> = async (token: string, survey?: Survey) => {
+) => Promise<PromiseResult> = async (token: string, survey?: Survey) => {
   if (!survey) return "Rejected";
   const surveyString = JSON.stringify({
     name: survey.name,
@@ -42,8 +41,6 @@ export const SubmitSurvey: (
   }
 };
 
-//http://localhost:3030/surveys?userId=1&$skip=0&$limit=3&$sort[createdAt]=-1
-
 export const getSurveyWithLimits: (
   limits: SurveyLimits,
   token: string
@@ -71,6 +68,37 @@ export const getSurveyWithLimits: (
   } catch (error) {
     console.error("Error", error);
     return [];
+  }
+};
+
+export const deleteSurvey: (
+  id: number,
+  token: string
+) => Promise<PromiseResult> = async (id: number, token: string) => {
+  if (!id || id <= 0) return "Rejected";
+  try {
+    const fetchResult = await fetch(
+      `${AppConfig.apiRootUrl}${AppConfig.apiSurveysPath}/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const result = await fetchResult.json();
+    console.log("result: ", result);
+
+    if (result.id > 0) {
+      return "Resolved";
+    }
+
+    return "Rejected";
+  } catch (error) {
+    console.error("Error", error);
+    return "Error";
   }
 };
 
