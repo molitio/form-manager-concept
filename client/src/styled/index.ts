@@ -11,3 +11,4 @@ export * from "./StyledInputButton";
 export * from "./StyledSurveys";
 export * from "./StyledControls";
 export * from "./StyledSurveyNew";
+export * from "./StyledProfile";

@@ -165,6 +165,7 @@ Az egész projektet tömörítsd be, kliensestül, szerverestül, és azt tölts
 
 - React használata (kötelező) - complete
 - Redux használata (kötelező) - complete
+
 - Navigáció megfelelően változik a be- és kijelentkezésnek megfelelően (1pt) - complete
 - Főoldal megjelenik (1pt)  - complete
 - Regisztráció működik (1pt) - complete
@@ -173,7 +174,7 @@ Az egész projektet tömörítsd be, kliensestül, szerverestül, és azt tölts
 - Új kérdőív, Kérdőíveim: csak bejelentkezve érhetőek el (1pt) - complete
 - Új kérdőív: új kérdőív mentésének helyes működése (2pt) - complete
 
-- Profil: csak bejelentkezve érhető el, megfelelő tartalommal (2pt)
+- Profil: csak bejelentkezve érhető el, megfelelő tartalommal (2pt) - complete
 - Profil: Kijelentkezés gomb működik (1pt) - complete
 
 - Kérdőíveim: megjelennek a kérdőívek az elérhető funkciókkal (2pt)

@@ -1,17 +1,18 @@
 import React from "react";
-import { StyledAppShell, StyledGlobal } from "../styled";
+import { useSelector } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { RootState, routeMap } from "../context";
+import { StyledAppShell, StyledGlobal } from "../styled";
 import AppLanding from "./AppLanding";
-import NavigationHeader from "./NavigationHeader";
 import Login from "./Login";
 import Register from "./Register";
 import Surveys from "./Surveys";
 import ErrorPage from "./ErrorPage";
 import Logout from "./Logout";
 import Responses from "./Responses";
-import { useSelector } from "react-redux";
 import SurveyNew from "./SurveyNew";
+import Profile from "./Profile";
+import NavigationHeader from "./NavigationHeader";
 
 const AppShell: React.FC = () => {
   const loggedIn = useSelector(
@@ -41,6 +42,7 @@ const AppShell: React.FC = () => {
                 path={routeMap["responses"].href}
                 element={<Responses />}
               />
+              <Route path={routeMap["profiles"].href} element={<Profile />} />
 
               <Route path={routeMap["logout"].href} element={<Logout />} />
             </>

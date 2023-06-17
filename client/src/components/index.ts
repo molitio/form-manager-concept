@@ -9,3 +9,4 @@ export { default as Responses } from "./Responses";
 export { default as SurveyView } from "./SurveyView";
 export { default as SurveyEdit } from "./SurveyEdit";
 export { default as PageSelectDropdown } from "./PageSelectDropdown";
+export { default as Profile } from "./Profile";
