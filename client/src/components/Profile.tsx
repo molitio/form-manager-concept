@@ -3,15 +3,25 @@ import {
   StyledProfile,
   StyledProfileInfo,
   StyledProfileItem,
+  StyledProfileLogoutButton,
   StyledProfileValue,
 } from "../styled";
-import { useSelector } from "react-redux";
-import { RootState } from "../context";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, setLoggedIn } from "../context";
 
 const Profile: React.FC = () => {
+  const dispatch = useDispatch();
   const authenticatedUser = useSelector(
     (state: RootState) => state?.auth?.user?.authenticatedUser
   );
+
+  const loggedIn = useSelector(
+    (state: RootState) => state.auth?.user?.loggedIn
+  );
+
+  const handleLogout = () => {
+    dispatch(setLoggedIn(false));
+  };
 
   return (
     <StyledProfile>
@@ -22,6 +32,7 @@ const Profile: React.FC = () => {
         <StyledProfileValue>{authenticatedUser?.fullname}</StyledProfileValue>
         <StyledProfileItem>Email address</StyledProfileItem>
         <StyledProfileValue>{authenticatedUser?.email}</StyledProfileValue>
+        <StyledProfileLogoutButton>Logout</StyledProfileLogoutButton>
       </StyledProfileInfo>
     </StyledProfile>
   );

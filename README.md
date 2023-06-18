@@ -178,9 +178,9 @@ Az egész projektet tömörítsd be, kliensestül, szerverestül, és azt tölts
 - Profil: Kijelentkezés gomb működik (1pt) - complete
 
 - Kérdőíveim: megjelennek a kérdőívek az elérhető funkciókkal (2pt) - complete
-- Kérdőíveim: módosítás helyes működése (2pt)
+- Kérdőíveim: módosítás helyes működése (2pt) - complete
 - Kérdőíveim: törlés helyes működése (2pt) - complete
-- Kérdőíveim: hivatkozás helyes működése (1pt)
+- Kérdőíveim: hivatkozás helyes működése (1pt) 
 
 - Kérdőív: a kérdőív kérdései megjelennek (3pt)
 - Kérdőív: a kérdések lapozható formában jelennek meg a lapok megnevezéseivel, a lapok közötti navigáció megfelelő (2pt)

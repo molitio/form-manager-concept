@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import { StyledPage } from "./StyledGlobal";
+import { StyledPage, StyledSection } from "./StyledGlobal";
 
-export const StyledProfile = styled(StyledPage)``;
+export const StyledProfile = styled(StyledSection)`
+  margin: 1em auto;
+`;
 export const StyledProfileInfo = styled.div`
   width: 32em;
   display: grid;
