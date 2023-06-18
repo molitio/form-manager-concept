@@ -93,7 +93,14 @@ const Surveys: React.FC = () => {
   };
 
   const handlePageChange = (skip: number, limit: number) => {
-    handleUpdateSurveyList(skip, limit);
+    /*      const pages = Math.ceil(total / pageSize);
+     const currentPage = skip / pageSize + 1;
+     
+     pageSizeCollection[selectedPageIndex]
+     
+     */
+    console.log("handlePageChange");
+    handleUpdateSurveyList(0, 3);
   };
 
   const handleCloseCheck = () => {
@@ -106,25 +113,10 @@ const Surveys: React.FC = () => {
     navigate(`${AppConfig.editSurveysPath}/${surveyId}`);
   };
 
-  console.log(
-    "surveys total: ",
-    surveyCollection?.reduce(
-      (total, survey) =>
-        total + Object.keys(survey.contentObject?.surveyPages ?? {}).length,
-      0
-    )
-  );
+  console.log("surveys total: ", surveyCollection?.length);
 
-  console.log(
-    "surveys total: ",
-    surveyCollection?.reduce(
-      (total, survey) =>
-        total + Object.keys(survey.contentObject?.surveyPages ?? {}).length,
-      0
-    )
-  );
-  console.log("limit: ", paging.limit);
-  console.log("skip: ", paging.skip);
+  console.log("paging limit: ", paging.limit);
+  console.log("paging skip: ", paging.skip);
 
   return (
     <StyledSurveys>
@@ -136,11 +128,9 @@ const Surveys: React.FC = () => {
         </StyledSurveyListItem>
         <StyledSurveyListItem key={"pagination"}>
           <Pagination
-            pageSize={paging.limit}
             pageSizeCollection={pageSizeCollection}
-            total={surveyCollection?.length ?? 0}
-            skip={paging.skip}
             handlePageChange={handlePageChange}
+            totalNumberOfSurveys={surveyCollection?.length ?? 0}
           />
         </StyledSurveyListItem>
         {surveyCollection?.map((survey) => (
@@ -186,13 +176,10 @@ const Surveys: React.FC = () => {
             </StyledSurveyControls>
           </StyledSurveyListItem>
         ))}
-        <Pagination
-          pageSize={paging.limit}
+        {/*       <Pagination
           pageSizeCollection={pageSizeCollection}
-          total={surveyCollection?.length ?? 0}
-          skip={paging.skip}
           handlePageChange={handlePageChange}
-        />
+        /> */}
       </StyledSurveyList>
     </StyledSurveys>
   );
