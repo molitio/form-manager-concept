@@ -1,14 +1,14 @@
 import React from "react";
-import { Survey, SurveyPage } from "../types";
+import { useDispatch, useSelector } from "react-redux";
+import SurveyView from "./SurveyView";
 import {
   StyledForm,
   StyledFormButton,
   StyledSurveyEdit,
   StyledFormTextArea,
 } from "../styled";
-import SurveyView from "./SurveyView";
-import { useDispatch, useSelector } from "react-redux";
 import {
+  AppConfig,
   RootState,
   setSelectedSurvey,
   setSelectedSurveyContentAndName,
@@ -18,7 +18,10 @@ import {
   isSurveyValid,
   getSurvey,
   updateSurvey,
+  stringifySurvey,
+  parseSurveyInput,
 } from "../services";
+import { useNavigate } from "react-router-dom";
 
 type SurveyEditProps = {
   surveyId?: number;
@@ -26,6 +29,8 @@ type SurveyEditProps = {
 
 const SurveyEdit: React.FC<SurveyEditProps> = (props) => {
   const { surveyId } = props;
+
+  const navigate = useNavigate();
 
   const [inputDisabled, setInputDisabled] = React.useState<boolean>(true);
 
@@ -36,49 +41,44 @@ const SurveyEdit: React.FC<SurveyEditProps> = (props) => {
   const selectedSurvey = useSelector(
     (state: RootState) => state.survey?.selectedSurvey
   );
-  const selectedSurveyContentObject = useSelector(
-    (state: RootState) => state.survey?.selectedSurvey?.contentObject
-  );
-  /* 
 
-  const selectedSurveyName = useSelector(
-    (state: RootState) => state.survey?.selectedSurvey?.name
-    );
-    */
   const authenticatedUser = useSelector(
     (state: RootState) => state?.auth?.user?.authenticatedUser
   );
 
   React.useEffect(() => {
-    if (inputValue.length === 0 && !surveyId) {
-      dispatch(setSelectedSurvey({ name: "" }));
-    }
+    if (!authenticatedUser) return;
+    dispatch(setSelectedSurvey({ name: "" }));
 
-    dispatch(setSelectedSurveyContentAndName(inputValue));
+    if (surveyId) {
+      const getExistingSurvey = async () => {
+        const survey = await getSurvey(
+          surveyId,
+          authenticatedUser.id,
+          authenticatedUser?.accessToken
+        );
+
+        if (survey) {
+          survey.contentObject = parseSurveyInput(
+            survey?.content ?? ""
+          )?.contentObject;
+          dispatch(setSelectedSurvey(survey));
+          setInputValue(survey.content ?? "");
+          setInputDisabled(!isSurveyValid(survey));
+        }
+      };
+      getExistingSurvey();
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (inputValue.length > 0) {
+      dispatch(setSelectedSurveyContentAndName(inputValue));
+    }
   }, [inputValue]);
 
   React.useEffect(() => {
-    if (!surveyId || !authenticatedUser) return;
-
-    const getExistingSurvey = async () => {
-      const survey = await getSurvey(
-        surveyId,
-        authenticatedUser.id,
-        authenticatedUser?.accessToken
-      );
-
-      if (survey) {
-        dispatch(setSelectedSurvey(survey));
-        setInputValue(survey.content ?? "");
-      }
-    };
-    getExistingSurvey();
-    setInputDisabled(!isSurveyValid(selectedSurvey ?? { name: "" }));
-  }, [surveyId]);
-
-  React.useEffect(() => {
     if (!selectedSurvey) return;
-    console.log("fire validation", selectedSurvey);
     setInputDisabled(!isSurveyValid(selectedSurvey));
   }, [selectedSurvey]);
 
@@ -91,7 +91,7 @@ const SurveyEdit: React.FC<SurveyEditProps> = (props) => {
 
     const submit = async () => {
       const submitSurveyResponse = await submitSurvey(
-        selectedSurvey ?? { name: "" },
+        selectedSurvey,
         authenticatedUser?.accessToken ?? ""
       );
       if (submitSurveyResponse === "Resolved") {
@@ -108,6 +108,7 @@ const SurveyEdit: React.FC<SurveyEditProps> = (props) => {
       if (editSurveyResponse === "Resolved") {
         dispatch(setSelectedSurvey({ name: "" }));
         setInputValue("");
+        navigate(AppConfig.surveysPath);
       }
     };
 
@@ -124,7 +125,6 @@ const SurveyEdit: React.FC<SurveyEditProps> = (props) => {
 
   return (
     <StyledSurveyEdit>
-      {selectedSurvey?.createdAt ?? "empty"}
       <StyledForm onSubmit={handleSubmitNewSurvey}>
         <StyledFormTextArea
           id="survey-name"

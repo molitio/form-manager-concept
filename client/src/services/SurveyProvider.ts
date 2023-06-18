@@ -12,6 +12,8 @@ export const submitSurvey: (
     content: survey.content,
   });
 
+  console.log("survey string", surveyString);
+
   try {
     const fetchResult = await fetch(
       `${AppConfig.apiRootUrl}${AppConfig.apiSurveysPath}`,
@@ -280,4 +282,28 @@ export const parseSurveyInput = (input: string): Survey | null => {
       surveyPages,
     },
   };
+};
+
+export const stringifySurvey = (survey: Survey): string => {
+  let output = `${survey.name}\n`;
+
+  for (const pageId in survey.contentObject?.surveyPages) {
+    if (
+      Object.prototype.hasOwnProperty.call(
+        survey.contentObject.surveyPages,
+        pageId
+      )
+    ) {
+      const page: SurveyPage = survey.contentObject.surveyPages[pageId];
+      output += `\n${page.name}\n`;
+      for (const questionId in page.questions) {
+        if (Object.prototype.hasOwnProperty.call(page.questions, questionId)) {
+          const question: SurveyQuestion = page.questions[questionId];
+          output += `${question.question}\n`;
+        }
+      }
+    }
+  }
+
+  return output;
 };

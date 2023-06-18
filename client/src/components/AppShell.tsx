@@ -13,7 +13,6 @@ import Responses from "./Responses";
 import SurveyNew from "./SurveyNew";
 import Profile from "./Profile";
 import NavigationHeader from "./NavigationHeader";
-import SurveyEdit from "./SurveyEdit";
 import SurveyEditor from "./SurveyEditor";
 
 const AppShell: React.FC = () => {
