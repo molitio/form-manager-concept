@@ -14,6 +14,11 @@ import { useDispatch } from "react-redux";
 import { deleteSurvey, getSurveyWithLimits } from "../services";
 import SurveyDate from "./SurveyDate";
 import { useNavigate } from "react-router-dom";
+import Pagination from "./Pagination";
+
+// display paging
+
+const pageSizeCollection = [0, 5, 10, 15, 25, 50, 100, 200];
 
 const Surveys: React.FC = () => {
   const dispatch = useDispatch();
@@ -31,7 +36,13 @@ const Surveys: React.FC = () => {
     id: 0,
   });
 
-  const handleUpdateSurveyList = async () => {
+  const [paging, setPaging] = React.useState({
+    skip: 5,
+    limit: 10,
+  });
+
+  const handleUpdateSurveyList = async (skip: number, limit: number) => {
+    setPaging({ skip: skip, limit: limit });
     const getSurveys = async () => {
       const surveyCollection = await getSurveyWithLimits(
         { userId: authenticatedUser?.id ?? 0, skip: 0, limit: 10 },
@@ -45,7 +56,7 @@ const Surveys: React.FC = () => {
   };
 
   React.useEffect(() => {
-    handleUpdateSurveyList();
+    handleUpdateSurveyList(paging.skip, paging.limit);
   }, []);
 
   React.useEffect(() => {}, [surveyCollection, authenticatedUser]);
@@ -60,7 +71,7 @@ const Surveys: React.FC = () => {
       );
 
       if (deleteResponse === "Resolved") {
-        handleUpdateSurveyList();
+        handleUpdateSurveyList(paging.skip, paging.limit);
       }
     };
 
@@ -81,6 +92,10 @@ const Surveys: React.FC = () => {
     }
   };
 
+  const handlePageChange = (skip: number, limit: number) => {
+    handleUpdateSurveyList(skip, limit);
+  };
+
   const handleCloseCheck = () => {
     setTimeout(() => {
       setCopyToClipboard({ active: false, id: 0 });
@@ -91,6 +106,26 @@ const Surveys: React.FC = () => {
     navigate(`${AppConfig.editSurveysPath}/${surveyId}`);
   };
 
+  console.log(
+    "surveys total: ",
+    surveyCollection?.reduce(
+      (total, survey) =>
+        total + Object.keys(survey.contentObject?.surveyPages ?? {}).length,
+      0
+    )
+  );
+
+  console.log(
+    "surveys total: ",
+    surveyCollection?.reduce(
+      (total, survey) =>
+        total + Object.keys(survey.contentObject?.surveyPages ?? {}).length,
+      0
+    )
+  );
+  console.log("limit: ", paging.limit);
+  console.log("skip: ", paging.skip);
+
   return (
     <StyledSurveys>
       <StyledHeader>Surveys</StyledHeader>
@@ -98,6 +133,15 @@ const Surveys: React.FC = () => {
         <StyledSurveyListItem key={"header"}>
           <StyledSurveyName>Name:</StyledSurveyName>
           <StyledSurveyControls>Actions</StyledSurveyControls>
+        </StyledSurveyListItem>
+        <StyledSurveyListItem key={"pagination"}>
+          <Pagination
+            pageSize={paging.limit}
+            pageSizeCollection={pageSizeCollection}
+            total={surveyCollection?.length ?? 0}
+            skip={paging.skip}
+            handlePageChange={handlePageChange}
+          />
         </StyledSurveyListItem>
         {surveyCollection?.map((survey) => (
           <StyledSurveyListItem key={survey.id}>
@@ -142,6 +186,13 @@ const Surveys: React.FC = () => {
             </StyledSurveyControls>
           </StyledSurveyListItem>
         ))}
+        <Pagination
+          pageSize={paging.limit}
+          pageSizeCollection={pageSizeCollection}
+          total={surveyCollection?.length ?? 0}
+          skip={paging.skip}
+          handlePageChange={handlePageChange}
+        />
       </StyledSurveyList>
     </StyledSurveys>
   );
