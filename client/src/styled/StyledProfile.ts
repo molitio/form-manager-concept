@@ -19,3 +19,11 @@ export const StyledProfileValue = styled.span`
   color: var(--text-primary);
   background-color: var(--bg-primary);
 `;
+
+export const StyledProfileLogoutButton = styled.button`
+  background-color: var(--bg-warning-soft);
+  margin: 1em auto;
+  color: var(--text-secondary);
+  padding: 0.5em;
+  grid-column: 1 / span 2;
+`;

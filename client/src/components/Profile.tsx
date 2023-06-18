@@ -15,10 +15,6 @@ const Profile: React.FC = () => {
     (state: RootState) => state?.auth?.user?.authenticatedUser
   );
 
-  const loggedIn = useSelector(
-    (state: RootState) => state.auth?.user?.loggedIn
-  );
-
   const handleLogout = () => {
     dispatch(setLoggedIn(false));
   };
@@ -32,7 +28,9 @@ const Profile: React.FC = () => {
         <StyledProfileValue>{authenticatedUser?.fullname}</StyledProfileValue>
         <StyledProfileItem>Email address</StyledProfileItem>
         <StyledProfileValue>{authenticatedUser?.email}</StyledProfileValue>
-        <StyledProfileLogoutButton>Logout</StyledProfileLogoutButton>
+        <StyledProfileLogoutButton onClick={handleLogout}>
+          Logout
+        </StyledProfileLogoutButton>
       </StyledProfileInfo>
     </StyledProfile>
   );
