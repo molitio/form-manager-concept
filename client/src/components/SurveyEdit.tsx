@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   RootState,
   setSelectedSurvey,
-  setSelectedSurveyFromInput,
+  setSelectedSurveyContentAndName,
 } from "../context";
 import {
   submitSurvey,
@@ -36,17 +36,25 @@ const SurveyEdit: React.FC<SurveyEditProps> = (props) => {
   const selectedSurvey = useSelector(
     (state: RootState) => state.survey?.selectedSurvey
   );
+  const selectedSurveyContentObject = useSelector(
+    (state: RootState) => state.survey?.selectedSurvey?.contentObject
+  );
+  /* 
 
+  const selectedSurveyName = useSelector(
+    (state: RootState) => state.survey?.selectedSurvey?.name
+    );
+    */
   const authenticatedUser = useSelector(
     (state: RootState) => state?.auth?.user?.authenticatedUser
   );
 
   React.useEffect(() => {
-    if (inputValue.length === 0) {
+    if (inputValue.length === 0 && !surveyId) {
       dispatch(setSelectedSurvey({ name: "" }));
     }
 
-    dispatch(setSelectedSurveyFromInput(inputValue));
+    dispatch(setSelectedSurveyContentAndName(inputValue));
   }, [inputValue]);
 
   React.useEffect(() => {
@@ -65,11 +73,12 @@ const SurveyEdit: React.FC<SurveyEditProps> = (props) => {
       }
     };
     getExistingSurvey();
+    setInputDisabled(!isSurveyValid(selectedSurvey ?? { name: "" }));
   }, [surveyId]);
 
   React.useEffect(() => {
     if (!selectedSurvey) return;
-    console.log("fire validation");
+    console.log("fire validation", selectedSurvey);
     setInputDisabled(!isSurveyValid(selectedSurvey));
   }, [selectedSurvey]);
 

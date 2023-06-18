@@ -10,17 +10,19 @@ const surveySlice = createSlice({
   reducers: {
     setSelectedSurvey: (state, action: PayloadAction<Survey>) => {
       if (!action.payload) return;
-
+      console.log("set Survey");
       state.selectedSurvey = action.payload;
     },
-    setSelectedSurveyFromInput: (state, action: PayloadAction<string>) => {
+    setSelectedSurveyContentAndName: (state, action: PayloadAction<string>) => {
       if (!action.payload) {
         return;
       }
 
       const parsedSurvey = parseSurveyInput(action.payload);
       if (parsedSurvey && state.selectedSurvey) {
-        state.selectedSurvey = { ...state.selectedSurvey, ...parsedSurvey };
+        console.log("set Survey name and contentObject");
+        state.selectedSurvey.name = parsedSurvey.name;
+        state.selectedSurvey.contentObject = parsedSurvey.contentObject;
       }
     },
     setSuveyCollection: (state, action: PayloadAction<Survey[]>) => {
@@ -32,5 +34,5 @@ const surveySlice = createSlice({
 export const surveyReducer = surveySlice.reducer;
 
 export const { setSelectedSurvey } = surveySlice.actions;
-export const { setSelectedSurveyFromInput } = surveySlice.actions;
+export const { setSelectedSurveyContentAndName } = surveySlice.actions;
 export const { setSuveyCollection } = surveySlice.actions;
