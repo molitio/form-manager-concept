@@ -16,22 +16,44 @@ const Pagination: React.FC<PaginationProps> = (props) => {
 
   const [pageSizeIndex, setPageSizeIndex] = React.useState(0);
   const [selectedPage, setSelectedPage] = React.useState(0);
-
-  const pageSize = pageSizeCollection[pageSizeIndex];
-  const totalPages = pageSize ? Math.ceil(totalNumberOfSurveys / pageSize) : 1;
-
-  console.log("total pages", totalPages);
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const [pages, setPages] = React.useState([0]);
 
   React.useEffect(() => {
-    console.log(totalNumberOfSurveys, pageSize, pages);
+    const handle = () => {
+      const pageSize = pageSizeCollection[pageSizeIndex];
+      const totalPages = pageSize
+        ? Math.ceil(totalNumberOfSurveys / pageSize) + 1
+        : 1;
 
-    handlePageChange(selectedPage * pageSize, pageSize);
-  }, [selectedPage, pageSize]);
+      console.log("total pages", totalPages);
+      const pagesArray = new Array(totalPages);
+
+      console.log("pages array", pagesArray);
+      const pages = pagesArray.map((page) => (page = page++));
+
+      setPages(pages);
+      console.log("pages", pages);
+      console.log(totalNumberOfSurveys, pageSize, pages);
+
+      handlePageChange(selectedPage * pageSize, pageSize);
+    };
+    handle();
+  }, [pageSizeIndex]);
+
+  React.useEffect(() => {
+    handlePageChange(
+      selectedPage * pageSizeCollection[pageSizeIndex],
+      pageSizeCollection[pageSizeIndex]
+    );
+  }, [selectedPage]);
 
   const handlePageSizeChange = (selectedPageSizeIndex: number) => {
     setPageSizeIndex(selectedPageSizeIndex);
-    setSelectedPage(0); // reset to first page when changing page size
+    setSelectedPage(0);
+    handlePageChange(
+      selectedPage * pageSizeCollection[pageSizeIndex],
+      pageSizeCollection[pageSizeIndex]
+    );
   };
 
   return (
@@ -47,13 +69,13 @@ const Pagination: React.FC<PaginationProps> = (props) => {
         ))}
       </StyledPaginationContainer>
       <StyledPaginationContainer>
-        {pages.map((i) => (
+        {pages.map((page) => (
           <StyledPaginationButton
-            key={i}
-            disabled={selectedPage === i}
-            onClick={() => setSelectedPage(i)}
+            key={page}
+            disabled={selectedPage === page}
+            onClick={() => setSelectedPage(page)}
           >
-            {i}
+            {page}
           </StyledPaginationButton>
         ))}
       </StyledPaginationContainer>

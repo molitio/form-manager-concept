@@ -15,6 +15,7 @@ import { deleteSurvey, getSurveyWithLimits } from "../services";
 import SurveyDate from "./SurveyDate";
 import { useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
+import { Survey } from "../types";
 
 // display paging
 
@@ -23,7 +24,7 @@ const pageSizeCollection = [0, 5, 10, 15, 25, 50, 100, 200];
 const Surveys: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const surveyCollection = useSelector(
+  const surveyCollectionSelector = useSelector(
     (state: RootState) => state.survey.surveyCollection
   );
 
@@ -41,25 +42,31 @@ const Surveys: React.FC = () => {
     limit: 10,
   });
 
-  const handleUpdateSurveyList = async (skip: number, limit: number) => {
-    setPaging({ skip: skip, limit: limit });
+  const [surveys, setSurveys] = React.useState<Survey[]>([]);
+
+  const handleUpdateSurveyList = async () => {
     const getSurveys = async () => {
-      const surveyCollection = await getSurveyWithLimits(
-        { userId: authenticatedUser?.id ?? 0, skip: 0, limit: 10 },
+      const surveys = await getSurveyWithLimits(
+        {
+          userId: authenticatedUser?.id ?? 0,
+          skip: paging.skip,
+          limit: paging.limit,
+        },
         authenticatedUser?.accessToken ?? ""
       );
-
-      dispatch(setSuveyCollection(surveyCollection));
+      setSurveys(surveys);
     };
 
     getSurveys();
   };
 
   React.useEffect(() => {
-    handleUpdateSurveyList(paging.skip, paging.limit);
-  }, []);
+    handleUpdateSurveyList();
+  }, [paging]);
 
-  React.useEffect(() => {}, [surveyCollection, authenticatedUser]);
+  React.useEffect(() => {
+    setSurveys(surveyCollectionSelector ?? []);
+  }, [surveyCollectionSelector, authenticatedUser]);
 
   const handleDelete = (id: number) => {
     if (id <= 0) return;
@@ -71,7 +78,7 @@ const Surveys: React.FC = () => {
       );
 
       if (deleteResponse === "Resolved") {
-        handleUpdateSurveyList(paging.skip, paging.limit);
+        handleUpdateSurveyList();
       }
     };
 
@@ -93,14 +100,9 @@ const Surveys: React.FC = () => {
   };
 
   const handlePageChange = (skip: number, limit: number) => {
-    /*      const pages = Math.ceil(total / pageSize);
-     const currentPage = skip / pageSize + 1;
-     
-     pageSizeCollection[selectedPageIndex]
-     
-     */
     console.log("handlePageChange");
-    handleUpdateSurveyList(skip, limit);
+    setPaging({ skip, limit });
+    handleUpdateSurveyList();
   };
 
   const handleCloseCheck = () => {
@@ -113,7 +115,7 @@ const Surveys: React.FC = () => {
     navigate(`${AppConfig.editSurveysPath}/${surveyId}`);
   };
 
-  console.log("surveys total: ", surveyCollection?.length);
+  console.log("surveys total: ", surveys?.length);
 
   console.log("paging limit: ", paging.limit);
   console.log("paging skip: ", paging.skip);
@@ -130,10 +132,10 @@ const Surveys: React.FC = () => {
           <Pagination
             pageSizeCollection={pageSizeCollection}
             handlePageChange={handlePageChange}
-            totalNumberOfSurveys={surveyCollection?.length ?? 0}
+            totalNumberOfSurveys={surveys?.length ?? 0}
           />
         </StyledSurveyListItem>
-        {surveyCollection?.map((survey) => (
+        {surveys?.map((survey) => (
           <StyledSurveyListItem key={survey.id}>
             <SurveyDate dateNumber={survey.createdAt ?? 0} />
             <StyledSurveyName>{survey.name}</StyledSurveyName>
