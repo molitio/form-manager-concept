@@ -3,6 +3,7 @@ import {
   StyledPagination,
   StyledPaginationButton,
   StyledPaginationContainer,
+  StyledPaginationText,
 } from "../styled";
 
 interface PaginationProps {
@@ -20,22 +21,38 @@ const Pagination: React.FC<PaginationProps> = (props) => {
 
   React.useEffect(() => {
     const handle = () => {
-      const pageSize = pageSizeCollection[pageSizeIndex];
-      const totalPages = pageSize
-        ? Math.ceil(totalNumberOfSurveys / pageSize) + 1
-        : 1;
+      /* const pageSize = pageSizeCollection[pageSizeIndex]; */
+      console.log("page size", pageSizeCollection[pageSizeIndex]);
+      if (pageSizeCollection[pageSizeIndex] === 0) {
+        handlePageChange(totalNumberOfSurveys, 10000);
+        return;
+      }
+      const totalNumberOfPages =
+        Math.ceil(totalNumberOfSurveys / pageSizeCollection[pageSizeIndex]) + 1;
 
-      console.log("total pages", totalPages);
-      const pagesArray = new Array(totalPages);
+      console.log("total pages", totalNumberOfPages);
+      const pagesArray: number[] = [];
+      pagesArray.push(0);
+
+      for (let index = 1; index <= totalNumberOfPages; index++) {
+        pagesArray.push(index);
+      }
 
       console.log("pages array", pagesArray);
       const pages = pagesArray.map((page) => (page = page++));
 
       setPages(pages);
       console.log("pages", pages);
-      console.log(totalNumberOfSurveys, pageSize, pages);
+      console.log(
+        totalNumberOfSurveys,
+        pageSizeCollection[pageSizeIndex],
+        pages
+      );
 
-      handlePageChange(selectedPage * pageSize, pageSize);
+      handlePageChange(
+        selectedPage * pageSizeCollection[pageSizeIndex],
+        pageSizeCollection[pageSizeIndex]
+      );
     };
     handle();
   }, [pageSizeIndex]);
@@ -56,9 +73,14 @@ const Pagination: React.FC<PaginationProps> = (props) => {
     );
   };
 
+  const handleSelectedPageChange = (page: number) => {
+    setSelectedPage(page);
+  };
+
   return (
     <StyledPagination>
       <StyledPaginationContainer>
+        <StyledPaginationText>Page Size</StyledPaginationText>
         {pageSizeCollection?.map((page, i) => (
           <StyledPaginationButton
             key={page}
@@ -69,13 +91,14 @@ const Pagination: React.FC<PaginationProps> = (props) => {
         ))}
       </StyledPaginationContainer>
       <StyledPaginationContainer>
+        <StyledPaginationText>Page</StyledPaginationText>
         {pages.map((page) => (
           <StyledPaginationButton
             key={page}
             disabled={selectedPage === page}
-            onClick={() => setSelectedPage(page)}
+            onClick={() => handleSelectedPageChange(page)}
           >
-            {page}
+            {page + 1}
           </StyledPaginationButton>
         ))}
       </StyledPaginationContainer>

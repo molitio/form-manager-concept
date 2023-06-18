@@ -100,9 +100,7 @@ const Surveys: React.FC = () => {
   };
 
   const handlePageChange = (skip: number, limit: number) => {
-    console.log("handlePageChange");
     setPaging({ skip, limit });
-    handleUpdateSurveyList();
   };
 
   const handleCloseCheck = () => {
@@ -114,11 +112,6 @@ const Surveys: React.FC = () => {
   const navigateToSurveyEdit = (surveyId: number) => {
     navigate(`${AppConfig.editSurveysPath}/${surveyId}`);
   };
-
-  console.log("surveys total: ", surveys?.length);
-
-  console.log("paging limit: ", paging.limit);
-  console.log("paging skip: ", paging.skip);
 
   return (
     <StyledSurveys>

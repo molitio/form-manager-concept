@@ -12,8 +12,6 @@ export const submitSurvey: (
     content: survey.content,
   });
 
-  console.log("survey string", surveyString);
-
   try {
     const fetchResult = await fetch(
       `${AppConfig.apiRootUrl}${AppConfig.apiSurveysPath}`,
