@@ -100,7 +100,7 @@ const Surveys: React.FC = () => {
      
      */
     console.log("handlePageChange");
-    handleUpdateSurveyList(0, 3);
+    handleUpdateSurveyList(skip, limit);
   };
 
   const handleCloseCheck = () => {

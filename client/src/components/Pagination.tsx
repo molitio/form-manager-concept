@@ -14,28 +14,24 @@ interface PaginationProps {
 const Pagination: React.FC<PaginationProps> = (props) => {
   const { pageSizeCollection, handlePageChange, totalNumberOfSurveys } = props;
 
-  const [pageSize, setPageSize] = React.useState(0);
   const [pageSizeIndex, setPageSizeIndex] = React.useState(0);
   const [selectedPage, setSelectedPage] = React.useState(0);
 
-  const pages = Math.ceil(
-    totalNumberOfSurveys / pageSizeCollection[pageSizeIndex]
-  );
-  /*   const currentPage = skip / pageSize + 1; */
+  const pageSize = pageSizeCollection[pageSizeIndex];
+  const totalPages = pageSize ? Math.ceil(totalNumberOfSurveys / pageSize) : 1;
+
+  console.log("total pages", totalPages);
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   React.useEffect(() => {
+    console.log(totalNumberOfSurveys, pageSize, pages);
+
     handlePageChange(selectedPage * pageSize, pageSize);
-  }, [selectedPage]);
+  }, [selectedPage, pageSize]);
 
-  const handlePageSizeChange = (
-    pageSize: number,
-    selectedPageIndex: number
-  ) => {
-    setPageSizeIndex(selectedPageIndex);
-  };
-
-  const handleSetCurrentPage = (currentPage: number) => {
-    setSelectedPage(currentPage);
+  const handlePageSizeChange = (selectedPageSizeIndex: number) => {
+    setPageSizeIndex(selectedPageSizeIndex);
+    setSelectedPage(0); // reset to first page when changing page size
   };
 
   return (
@@ -44,21 +40,20 @@ const Pagination: React.FC<PaginationProps> = (props) => {
         {pageSizeCollection?.map((page, i) => (
           <StyledPaginationButton
             key={page}
-            /* disabled={currentPage === page} */
-            onClick={() => handlePageSizeChange(page, i)}
+            onClick={() => handlePageSizeChange(i)}
           >
             {page === 0 ? "All" : page}
           </StyledPaginationButton>
         ))}
       </StyledPaginationContainer>
       <StyledPaginationContainer>
-        {Array.from({ length: pages }, (_, i) => i + 1).map((page, i) => (
+        {pages.map((i) => (
           <StyledPaginationButton
-            key={page}
-            /* disabled={currentPage === page} */
-            onClick={() => handleSetCurrentPage(page)}
+            key={i}
+            disabled={selectedPage === i}
+            onClick={() => setSelectedPage(i)}
           >
-            {page === 0 ? "" : page}
+            {i}
           </StyledPaginationButton>
         ))}
       </StyledPaginationContainer>
